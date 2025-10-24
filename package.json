@@ -1,0 +1,34 @@
+{
+  "name": "portfolio-management",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A complete portfolio management system with Strapi backend and Next.js frontend",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "setup": "yarn install",
+    "dev": "concurrently \"yarn dev:backend\" \"yarn dev:frontend\"",
+    "dev:backend": "yarn workspace portfolio-backend develop",
+    "dev:frontend": "yarn workspace portfolio-frontend dev",
+    "build": "yarn build:backend && yarn build:frontend",
+    "build:backend": "yarn workspace portfolio-backend build",
+    "build:frontend": "yarn workspace portfolio-frontend build",
+    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\"",
+    "start:backend": "yarn workspace portfolio-backend start",
+    "start:frontend": "yarn workspace portfolio-frontend start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "author": {
+    "name": "Portfolio Developer"
+  },
+  "license": "MIT",
+  "packageManager": "yarn@4.10.3"
+}
