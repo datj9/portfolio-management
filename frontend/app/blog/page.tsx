@@ -1,13 +1,14 @@
 import { getBlogs } from '@/lib/strapi';
 import { Blog } from '@/types/strapi';
 import { BlogCard } from '@/components/BlogCard';
+import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
 export const metadata = {
   title: 'Blog - Portfolio',
   description: 'Read my latest blog posts and articles',
 };
 
-export const revalidate = 300;
+export const revalidate = IMMEDIATE_REVALIDATE_TIME;
 
 export default async function BlogPage() {
   try {

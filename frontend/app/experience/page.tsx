@@ -1,13 +1,14 @@
 import { getWorkExperiences } from '@/lib/strapi';
 import { WorkExperience } from '@/types/strapi';
 import { WorkExperienceCard } from '@/components/WorkExperienceCard';
+import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
 export const metadata = {
   title: 'Work Experience - Portfolio',
   description: 'My professional work experience and career journey',
 };
 
-export const revalidate = 300;
+export const revalidate = IMMEDIATE_REVALIDATE_TIME;
 
 export default async function ExperiencePage() {
   try {

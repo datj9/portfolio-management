@@ -130,7 +130,7 @@ The app fetches data from Strapi using the following endpoints:
 Pages use Next.js Incremental Static Regeneration (ISR) with a 60-second revalidation period:
 
 ```typescript
-export const revalidate = 300; // Revalidate every 60 seconds
+export const revalidate = 60; // Revalidate every 60 seconds
 ```
 
 This means:

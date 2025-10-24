@@ -6,8 +6,9 @@ import { getStrapiMediaURL } from '@/lib/strapi';
 import { Blog } from '@/types/strapi';
 import { formatDate } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
+import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
-export const revalidate = 300;
+export const revalidate = IMMEDIATE_REVALIDATE_TIME;
 
 interface BlogPostPageProps {
   params: {

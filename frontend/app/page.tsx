@@ -5,8 +5,9 @@ import { getStrapiMediaURL } from '@/lib/strapi';
 import { Introduction, StrapiResponse, WorkExperience, Blog } from '@/types/strapi';
 import { WorkExperienceCard } from '@/components/WorkExperienceCard';
 import { BlogCard } from '@/components/BlogCard';
+import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
-export const revalidate = 300; // Revalidate every 60 seconds
+export const revalidate = IMMEDIATE_REVALIDATE_TIME;
 
 export default async function HomePage() {
   try {

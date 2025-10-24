@@ -1,9 +1,9 @@
 import { getIntroduction, getWorkExperiences } from '@/lib/strapi';
 import { Introduction, WorkExperience } from '@/types/strapi';
 import CVContent from '@/components/CVContent';
+import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
-// Enable ISR with 60 second revalidation
-export const revalidate = 300;
+export const revalidate = IMMEDIATE_REVALIDATE_TIME;
 
 export default async function CVPage() {
   try {
