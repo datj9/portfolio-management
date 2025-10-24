@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 const s3Client = new S3Client({
   credentials: {
@@ -52,6 +52,7 @@ module.exports = () => ({
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: "public/cv.html",
         Body: html,
+        ACL: "public-read",
       });
       await s3Client.send(putCommand);
       return {
