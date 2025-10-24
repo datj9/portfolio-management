@@ -254,9 +254,8 @@ module.exports = () => ({
         }
         
         footer {
-            background: #333;
-            color: white;
-            text-align: center;
+            color: black;
+            text-align: left;
             padding: 20px;
             font-size: 0.9em;
             margin: 0;
