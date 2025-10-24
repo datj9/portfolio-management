@@ -4,7 +4,7 @@ import { BlogCard } from '@/components/BlogCard';
 import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
 export const metadata = {
-  title: 'Blog - Portfolio',
+  title: 'Dat Nguyen - Blog - Portfolio',
   description: 'Read my latest blog posts and articles',
 };
 

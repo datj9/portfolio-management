@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Introduction, WorkExperience } from "@/types/strapi"
 import { getStrapiURL } from "@/lib/strapi"
+import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
 
 interface CVContentProps {
   introduction: Introduction
@@ -172,7 +173,7 @@ export default function CVContent({
         </div>
 
         {/* CV Content */}
-        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto">
+        <div id='cv-content' className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto">
           {/* Header */}
           <header className="mb-8 pb-6 border-b-2 border-primary-600">
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
@@ -314,73 +315,80 @@ export default function CVContent({
                 Work Experience
               </h2>
               <div className="space-y-6">
-                {workExperiences.map((exp) => {
-                  const {
-                    company,
-                    position,
-                    startDate,
-                    endDate,
-                    current,
-                    location: expLocation,
-                    description,
-                    achievements,
-                    technologies,
-                  } = exp.attributes
-
-                  return (
-                    <div
-                      key={exp.id}
-                      className="border-l-4 border-primary-600 pl-4"
-                    >
-                      <h3 className="text-xl font-bold text-gray-900">
-                        {position}
-                      </h3>
-                      <p className="text-lg text-primary-600 font-semibold">
-                        {company}
-                      </p>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {formatDate(startDate)} -{" "}
-                        {current ? "Present" : formatDate(endDate!)}
-                        {expLocation && ` • ${expLocation}`}
-                      </p>
-
-                      {description && (
-                        <div
-                          className="text-gray-700 mb-3 prose prose-sm max-w-none"
-                          dangerouslySetInnerHTML={{ __html: description }}
-                        />
-                      )}
-
-                      {achievements && achievements.length > 0 && (
-                        <div className="mb-3">
-                          <p className="font-semibold text-gray-900 mb-2">
-                            Key Achievements:
-                          </p>
-                          <ul className="list-disc list-inside space-y-1 text-gray-700">
-                            {achievements.map(
-                              (achievement, achievementIndex) => (
-                                <li key={achievementIndex}>{achievement}</li>
-                              )
-                            )}
-                          </ul>
-                        </div>
-                      )}
-
-                      {technologies && technologies.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {technologies.map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="inline-flex items-center justify-center bg-secondary-500 text-white text-xs px-3 py-1 rounded-full"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                {workExperiences
+                  .sort((exp) => (exp.attributes.current ? 1 : 0))
+                  .sort(
+                    (exp1, exp2) =>
+                      new Date(exp2.attributes.startDate).getTime() -
+                      new Date(exp1.attributes.startDate).getTime()
                   )
-                })}
+                  .map((exp) => {
+                    const {
+                      company,
+                      position,
+                      startDate,
+                      endDate,
+                      current,
+                      location: expLocation,
+                      description,
+                      achievements,
+                      technologies,
+                    } = exp.attributes
+
+                    return (
+                      <div
+                        key={exp.id}
+                        className="border-l-4 border-primary-600 pl-4"
+                      >
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {position}
+                        </h3>
+                        <p className="text-lg text-primary-600 font-semibold">
+                          {company}
+                        </p>
+                        <p className="text-sm text-gray-600 mb-2">
+                          {formatDate(startDate)} -{" "}
+                          {current ? "Present" : formatDate(endDate!)}
+                          {expLocation && ` • ${expLocation}`}
+                        </p>
+
+                        {description && (
+                          <div
+                            className="text-gray-700 mb-3 prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: description }}
+                          />
+                        )}
+
+                        {achievements && achievements.length > 0 && (
+                          <div className="mb-3">
+                            <p className="font-semibold text-gray-900 mb-2">
+                              Key Achievements:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 text-gray-700">
+                              {achievements.map(
+                                (achievement, achievementIndex) => (
+                                  <li key={achievementIndex}>{achievement}</li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        )}
+
+                        {technologies && technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-3">
+                            {technologies.map((tech, techIndex) => (
+                              <span
+                                key={techIndex}
+                                className="inline-flex items-center justify-center bg-secondary-500 text-white text-xs px-3 py-1 rounded-full"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
               </div>
             </section>
           )}
@@ -400,8 +408,9 @@ export default function CVContent({
 
         <div className="mt-6 text-center text-sm text-gray-500">
           <p className="text-gray-400 text-xs">
-            💡 This CV is automatically regenerated every 60 seconds and when
-            content is updated in Strapi.
+            💡 This CV is automatically regenerated every{" "}
+            {IMMEDIATE_REVALIDATE_TIME / 60} minutes and when content is
+            updated.
           </p>
         </div>
       </div>

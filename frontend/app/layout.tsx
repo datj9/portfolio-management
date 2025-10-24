@@ -9,7 +9,7 @@ import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Dat Nguyen - Portfolio",
   description: "My professional portfolio and blog",
 }
 

@@ -261,21 +261,23 @@ module.exports = () => ({
         }
         
         .skill-tag, .tech-tag {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            vertical-align: middle;
-            background: #0284c7;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            margin: 5px 5px 5px 0;
-            line-height: 1.2;
+            display: inline;
+            color: #555;
+            font-size: 0.9em;
+            margin-right: 12px;
         }
         
         .tech-tag {
-            background: #0369a1;
+            color: #666;
+        }
+        
+        .skill-tag:after, .tech-tag:after {
+            content: " • ";
+            color: #ccc;
+        }
+        
+        .skill-tag:last-child:after, .tech-tag:last-child:after {
+            content: "";
         }
         
         footer {
@@ -397,6 +399,8 @@ module.exports = () => ({
             <section class="experience-section">
                 <h2>Work Experience</h2>
                 ${workExperiences
+                  .sort((exp) => (exp.current ? 1 : 0))
+                  .sort((exp1, exp2) => exp2.startDate - exp1.startDate)
                   .map(
                     (exp) => `
                     <div class="experience-item">

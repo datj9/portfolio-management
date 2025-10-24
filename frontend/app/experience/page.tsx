@@ -4,7 +4,7 @@ import { WorkExperienceCard } from '@/components/WorkExperienceCard';
 import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
 
 export const metadata = {
-  title: 'Work Experience - Portfolio',
+  title: 'Dat Nguyen - Work Experience - Portfolio',
   description: 'My professional work experience and career journey',
 };
 
