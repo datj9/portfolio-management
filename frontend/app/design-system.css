@@ -1,0 +1,376 @@
+/* Material Design Styles */
+.design-material {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.design-material.theme-light {
+  background: #fafafa;
+  color: #212121;
+}
+
+.design-material.theme-dark {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+.design-material h1 {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.design-material.theme-light h1,
+.design-material.theme-light h2,
+.design-material.theme-light h3,
+.design-material.theme-light h4,
+.design-material.theme-light h5 {
+  color: #212121;
+}
+
+.design-material.theme-dark h1,
+.design-material.theme-dark h2,
+.design-material.theme-dark h3,
+.design-material.theme-dark h4,
+.design-material.theme-dark h5 {
+  color: #e0e0e0;
+}
+
+.design-material.theme-light .text-primary-600,
+.design-material.theme-light .primary-accent {
+  color: #1976d2 !important;
+}
+
+.design-material.theme-dark .text-primary-600,
+.design-material.theme-dark .primary-accent {
+  color: #90caf9 !important;
+}
+
+.design-material.theme-light .bg-primary-600 {
+  background-color: #1976d2 !important;
+}
+
+.design-material.theme-dark .bg-primary-600 {
+  background-color: #90caf9 !important;
+}
+
+.design-material.theme-light .border-primary-600 {
+  border-color: #1976d2 !important;
+}
+
+.design-material.theme-dark .border-primary-600 {
+  border-color: #90caf9 !important;
+}
+
+/* Human Interface (Apple) Styles */
+.design-human-interface {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+}
+
+.design-human-interface.theme-light {
+  background: #f5f5f7;
+  color: #000000;
+}
+
+.design-human-interface.theme-dark {
+  background: #000000;
+  color: #ffffff;
+}
+
+.design-human-interface h1 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.design-human-interface h2 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.design-human-interface.theme-light h1,
+.design-human-interface.theme-light h2,
+.design-human-interface.theme-light h3,
+.design-human-interface.theme-light h4,
+.design-human-interface.theme-light h5 {
+  color: #000000;
+}
+
+.design-human-interface.theme-dark h1,
+.design-human-interface.theme-dark h2,
+.design-human-interface.theme-dark h3,
+.design-human-interface.theme-dark h4,
+.design-human-interface.theme-dark h5 {
+  color: #ffffff;
+}
+
+.design-human-interface.theme-light .text-primary-600,
+.design-human-interface.theme-light .primary-accent {
+  color: #007aff !important;
+}
+
+.design-human-interface.theme-dark .text-primary-600,
+.design-human-interface.theme-dark .primary-accent {
+  color: #0a84ff !important;
+}
+
+.design-human-interface.theme-light .bg-primary-600 {
+  background-color: #007aff !important;
+}
+
+.design-human-interface.theme-dark .bg-primary-600 {
+  background-color: #0a84ff !important;
+}
+
+.design-human-interface.theme-light .border-primary-600 {
+  border-color: #007aff !important;
+}
+
+.design-human-interface.theme-dark .border-primary-600 {
+  border-color: #0a84ff !important;
+}
+
+/* Fluent Design (Microsoft) Styles */
+.design-fluent {
+  font-family: 'Segoe UI', 'Segoe UI Web', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.design-fluent.theme-light {
+  background: #f3f2f1;
+  color: #323130;
+}
+
+.design-fluent.theme-dark {
+  background: #1f1f1f;
+  color: #f3f2f1;
+}
+
+.design-fluent h1 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.design-fluent h2 {
+  font-weight: 600;
+}
+
+.design-fluent.theme-light h1,
+.design-fluent.theme-light h2,
+.design-fluent.theme-light h3,
+.design-fluent.theme-light h4,
+.design-fluent.theme-light h5 {
+  color: #323130;
+}
+
+.design-fluent.theme-dark h1,
+.design-fluent.theme-dark h2,
+.design-fluent.theme-dark h3,
+.design-fluent.theme-dark h4,
+.design-fluent.theme-dark h5 {
+  color: #f3f2f1;
+}
+
+.design-fluent.theme-light .text-primary-600,
+.design-fluent.theme-light .primary-accent {
+  color: #0078d4 !important;
+}
+
+.design-fluent.theme-dark .text-primary-600,
+.design-fluent.theme-dark .primary-accent {
+  color: #3aa0f3 !important;
+}
+
+.design-fluent.theme-light .bg-primary-600 {
+  background-color: #0078d4 !important;
+}
+
+.design-fluent.theme-dark .bg-primary-600 {
+  background-color: #3aa0f3 !important;
+}
+
+.design-fluent.theme-light .border-primary-600 {
+  border-color: #0078d4 !important;
+}
+
+.design-fluent.theme-dark .border-primary-600 {
+  border-color: #3aa0f3 !important;
+}
+
+/* Common Dark Theme Text Colors */
+.theme-dark .text-gray-50 {
+  color: #fafafa !important;
+}
+
+.theme-dark .text-gray-100 {
+  color: #f5f5f5 !important;
+}
+
+.theme-dark .text-gray-200 {
+  color: #eeeeee !important;
+}
+
+.theme-dark .text-gray-300 {
+  color: #e0e0e0 !important;
+}
+
+.theme-dark .text-gray-400 {
+  color: #bdbdbd !important;
+}
+
+.theme-dark .text-gray-500 {
+  color: #9e9e9e !important;
+}
+
+.theme-dark .text-gray-600 {
+  color: #757575 !important;
+}
+
+.theme-dark .text-gray-700 {
+  color: #cccccc !important;
+}
+
+.theme-dark .text-gray-800 {
+  color: #e0e0e0 !important;
+}
+
+.theme-dark .text-gray-900 {
+  color: #e0e0e0 !important;
+}
+
+/* Dark Theme Background Colors */
+.theme-dark .bg-gray-50 {
+  background-color: #1a1a1a !important;
+}
+
+.theme-dark .bg-gray-100 {
+  background-color: #262626 !important;
+}
+
+.theme-dark .bg-gray-200 {
+  background-color: #2e2e2e !important;
+}
+
+.theme-dark .bg-white {
+  background-color: #1e1e1e !important;
+}
+
+/* Dark Theme Border Colors */
+.theme-dark .border-gray-100 {
+  border-color: #2a2a2a !important;
+}
+
+.theme-dark .border-gray-200 {
+  border-color: #3a3a3a !important;
+}
+
+.theme-dark .border-gray-300 {
+  border-color: #4a4a4a !important;
+}
+
+/* CV Specific Styles */
+.design-material .cv-header {
+  border-bottom-width: 2px;
+}
+
+.design-human-interface .cv-header {
+  border-bottom-width: 1px;
+}
+
+.design-fluent .cv-header {
+  border-bottom-width: 2px;
+}
+
+.design-material .experience-item {
+  border-left-width: 4px;
+  border-radius: 4px;
+}
+
+.design-human-interface .experience-item {
+  border-left-width: 3px;
+  border-radius: 8px;
+}
+
+.design-fluent .experience-item {
+  border-left-width: 4px;
+  border-radius: 2px;
+}
+
+.design-fluent.theme-light .experience-item {
+  background: #faf9f8;
+}
+
+.design-fluent.theme-dark .experience-item {
+  background: #292827;
+}
+
+/* Secondary colors for tags and badges */
+.design-material.theme-light .bg-secondary-500 {
+  background-color: #1976d2 !important;
+}
+
+.design-material.theme-dark .bg-secondary-500 {
+  background-color: #64b5f6 !important;
+}
+
+.design-human-interface.theme-light .bg-secondary-500 {
+  background-color: #5856d6 !important;
+}
+
+.design-human-interface.theme-dark .bg-secondary-500 {
+  background-color: #5e5ce6 !important;
+}
+
+.design-fluent.theme-light .bg-secondary-500 {
+  background-color: #8764b8 !important;
+}
+
+.design-fluent.theme-dark .bg-secondary-500 {
+  background-color: #b4a0ff !important;
+}
+
+/* Primary background colors for tags */
+.design-material.theme-light .bg-primary-100 {
+  background-color: #e3f2fd !important;
+}
+
+.design-material.theme-light .text-primary-800 {
+  color: #1565c0 !important;
+}
+
+.design-material.theme-dark .bg-primary-100 {
+  background-color: #1e3a5f !important;
+}
+
+.design-material.theme-dark .text-primary-800 {
+  color: #90caf9 !important;
+}
+
+.design-human-interface.theme-light .bg-primary-100 {
+  background-color: #e5f1ff !important;
+}
+
+.design-human-interface.theme-light .text-primary-800 {
+  color: #0051d5 !important;
+}
+
+.design-human-interface.theme-dark .bg-primary-100 {
+  background-color: #1a2e4d !important;
+}
+
+.design-human-interface.theme-dark .text-primary-800 {
+  color: #64b5f6 !important;
+}
+
+.design-fluent.theme-light .bg-primary-100 {
+  background-color: #deecf9 !important;
+}
+
+.design-fluent.theme-light .text-primary-800 {
+  color: #004578 !important;
+}
+
+.design-fluent.theme-dark .bg-primary-100 {
+  background-color: #1a3753 !important;
+}
+
+.design-fluent.theme-dark .text-primary-800 {
+  color: #6cb8f6 !important;
+}
+

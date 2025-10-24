@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Introduction, WorkExperience } from "@/types/strapi"
 import { getStrapiURL } from "@/lib/strapi"
 import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
+import { DesignSystemSelector } from "@/components/DesignSystemSelector"
 
 interface CVContentProps {
   introduction: Introduction
@@ -33,7 +34,7 @@ export default function CVContent({
 
   const handleDownloadPDF = async () => {
     setIsGeneratingPDF(true)
-
+    
     try {
       // Use the cv.html for PDF generation
       const html2pdf = (await import("html2pdf.js")).default
@@ -44,11 +45,11 @@ export default function CVContent({
       const doc = parser.parseFromString(htmlContent, "text/html")
       const styles = doc.querySelector("style")?.innerHTML || ""
       const container = doc.querySelector(".container")
-
+      
       if (!container) {
         throw new Error("CV container not found")
       }
-
+      
       const wrapper = document.createElement("div")
       wrapper.innerHTML = `
         <style>${styles}</style>
@@ -59,24 +60,24 @@ export default function CVContent({
       const year = currentTime.getFullYear()
       const month = String(currentTime.getMonth() + 1).padStart(2, "0")
       const day = String(currentTime.getDate()).padStart(2, "0")
-
+      
       const options = {
         margin: 0,
         filename: `CV_${year}${month}${day}.pdf`,
         image: { type: "jpeg" as "jpeg", quality: 0.98 },
-        html2canvas: {
+        html2canvas: { 
           scale: 2,
           useCORS: true,
           letterRendering: true,
           logging: false,
         },
-        jsPDF: {
+        jsPDF: { 
           unit: "mm",
           format: "a4",
           orientation: "portrait",
         },
       }
-
+      
       // @ts-ignore
       await html2pdf().set(options).from(wrapper).save()
     } catch (error) {
@@ -173,17 +174,20 @@ export default function CVContent({
         </div>
 
         {/* CV Content */}
-        <div id='cv-content' className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto">
+        <div 
+          id='cv-content' 
+          className="bg-white rounded-lg shadow-lg p-8 md:p-12 max-w-4xl mx-auto"
+        >
           {/* Header */}
-          <header className="mb-8 pb-6 border-b-2 border-primary-600">
+          <header className="cv-header mb-8 pb-6 border-b-2 border-primary-600">
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
               {fullName}
             </h1>
-            <p className="text-2xl text-primary-600 mb-4">{title}</p>
-
-            <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-              {email && (
-                <span className="flex items-center gap-1">
+              <p className="text-2xl text-primary-600 mb-4">{title}</p>
+              
+              <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                {email && (
+                  <span className="flex items-center gap-1">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -196,12 +200,12 @@ export default function CVContent({
                       strokeWidth={2}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
-                  </svg>
-                  {email}
-                </span>
-              )}
-              {phone && (
-                <span className="flex items-center gap-1">
+                    </svg>
+                    {email}
+                  </span>
+                )}
+                {phone && (
+                  <span className="flex items-center gap-1">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -214,12 +218,12 @@ export default function CVContent({
                       strokeWidth={2}
                       d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                     />
-                  </svg>
-                  {phone}
-                </span>
-              )}
-              {location && (
-                <span className="flex items-center gap-1">
+                    </svg>
+                    {phone}
+                  </span>
+                )}
+                {location && (
+                  <span className="flex items-center gap-1">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -238,83 +242,83 @@ export default function CVContent({
                       strokeWidth={2}
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
-                  </svg>
-                  {location}
-                </span>
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-3 mt-4">
-              {website && (
+                    </svg>
+                    {location}
+                  </span>
+                )}
+              </div>
+              
+              <div className="flex flex-wrap gap-3 mt-4">
+                {website && (
                 <a
                   href={website}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm"
                 >
-                  🌐 Website
-                </a>
-              )}
-              {linkedin && (
+                    🌐 Website
+                  </a>
+                )}
+                {linkedin && (
                 <a
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm"
                 >
-                  💼 LinkedIn
-                </a>
-              )}
-              {github && (
+                    💼 LinkedIn
+                  </a>
+                )}
+                {github && (
                 <a
                   href={github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-600 hover:text-primary-700 text-sm"
                 >
-                  💻 GitHub
-                </a>
-              )}
-            </div>
-          </header>
+                    💻 GitHub
+                  </a>
+                )}
+              </div>
+            </header>
 
-          {/* Summary */}
-          {summary && (
-            <section className="mb-8">
+            {/* Summary */}
+            {summary && (
+              <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Professional Summary
               </h2>
-              <div
-                className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: summary }}
-              />
-            </section>
-          )}
+                <div 
+                  className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: summary }}
+                />
+              </section>
+            )}
 
-          {/* Skills */}
-          {skills && skills.length > 0 && (
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Skills</h2>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
+            {/* Skills */}
+            {skills && skills.length > 0 && (
+              <section className="mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Skills</h2>
+                <div className="flex flex-wrap gap-2">
+                  {skills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            )}
 
-          {/* Work Experience */}
-          {workExperiences.length > 0 && (
-            <section className="mb-8">
+            {/* Work Experience */}
+            {workExperiences.length > 0 && (
+              <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 Work Experience
               </h2>
-              <div className="space-y-6">
+                <div className="space-y-6">
                 {workExperiences
                   .sort((exp) => (exp.attributes.current ? 1 : 0))
                   .sort(
@@ -334,11 +338,11 @@ export default function CVContent({
                       achievements,
                       technologies,
                     } = exp.attributes
-
+                    
                     return (
                       <div
                         key={exp.id}
-                        className="border-l-4 border-primary-600 pl-4"
+                        className="experience-item border-l-4 border-primary-600 pl-4"
                       >
                         <h3 className="text-xl font-bold text-gray-900">
                           {position}
@@ -351,14 +355,14 @@ export default function CVContent({
                           {current ? "Present" : formatDate(endDate!)}
                           {expLocation && ` • ${expLocation}`}
                         </p>
-
+                        
                         {description && (
-                          <div
+                          <div 
                             className="text-gray-700 mb-3 prose prose-sm max-w-none"
                             dangerouslySetInnerHTML={{ __html: description }}
                           />
                         )}
-
+                        
                         {achievements && achievements.length > 0 && (
                           <div className="mb-3">
                             <p className="font-semibold text-gray-900 mb-2">
@@ -367,13 +371,13 @@ export default function CVContent({
                             <ul className="list-disc list-inside space-y-1 text-gray-700">
                               {achievements.map(
                                 (achievement, achievementIndex) => (
-                                  <li key={achievementIndex}>{achievement}</li>
+                                <li key={achievementIndex}>{achievement}</li>
                                 )
                               )}
                             </ul>
                           </div>
                         )}
-
+                        
                         {technologies && technologies.length > 0 && (
                           <div className="flex flex-wrap gap-2 mt-3">
                             {technologies.map((tech, techIndex) => (
@@ -389,12 +393,12 @@ export default function CVContent({
                       </div>
                     )
                   })}
-              </div>
-            </section>
-          )}
+                </div>
+              </section>
+            )}
 
-          {/* Footer */}
-          <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
+            {/* Footer */}
+            <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
             <p>
               Generated on{" "}
               {new Date().toLocaleDateString("en-US", {
@@ -403,8 +407,8 @@ export default function CVContent({
                 day: "numeric",
               })}
             </p>
-          </footer>
-        </div>
+            </footer>
+          </div>
 
         <div className="mt-6 text-center text-sm text-gray-500">
           <p className="text-gray-400 text-xs">
