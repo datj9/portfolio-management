@@ -262,6 +262,8 @@ module.exports = () => ({
         
         .skill-tag, .tech-tag {
             display: inline-block;
+            vertical-align: middle;
+            text-align: center;
             background: #0284c7;
             color: white;
             padding: 5px 12px;
