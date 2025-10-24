@@ -6,7 +6,7 @@ module.exports = ({ env }) => [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'connect-src': ["'self'", 'https:', env('DOMAIN_NAME')],
+          'connect-src': ["'self'", 'https:', 'http:', env('DOMAIN_NAME')],
           'img-src': [
             "'self'",
             'data:',
@@ -35,7 +35,7 @@ module.exports = ({ env }) => [
     name: 'strapi::cors',
     config: {
       enabled: true,
-      origin: ['http://localhost:3000', 'http://localhost:1337'],
+      origin: ['http://localhost:3000', 'http://localhost:1337', env('DOMAIN_NAME')],
       expose: ['WWW-Authenticate', 'Server-Authorization'],
       maxAge: 31536000,
       credentials: true,
