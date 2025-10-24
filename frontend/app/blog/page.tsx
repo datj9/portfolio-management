@@ -21,7 +21,7 @@ export default async function BlogPage() {
           <h1 className="text-4xl font-bold text-gray-900 mb-8">Blog</h1>
           <div className="bg-white rounded-lg shadow-md p-8">
             <p className="text-gray-600">
-              No blog posts available yet. Please add content in Strapi admin.
+              No blog posts available yet.
             </p>
           </div>
         </div>

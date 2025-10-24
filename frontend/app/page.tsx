@@ -25,7 +25,7 @@ export default async function HomePage() {
       return (
         <div className="max-w-7xl mx-auto px-4 py-16">
           <p className="text-center text-gray-600">
-            No introduction data available. Please add content in Strapi admin.
+            No introduction data available.
           </p>
         </div>
       );

@@ -86,3 +86,17 @@ export interface Blog {
   };
 }
 
+export interface ContactRequest {
+  id: number;
+  attributes: {
+    name: string;
+    email: string;
+    company?: string;
+    subject: string;
+    message: string;
+    publishedAt?: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+

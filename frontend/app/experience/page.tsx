@@ -21,7 +21,7 @@ export default async function ExperiencePage() {
           <h1 className="text-4xl font-bold text-gray-900 mb-8">Work Experience</h1>
           <div className="bg-white rounded-lg shadow-md p-8">
             <p className="text-gray-600">
-              No work experience entries available yet. Please add content in Strapi admin.
+              No work experience entries available yet.
             </p>
           </div>
         </div>
