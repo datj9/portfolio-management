@@ -1,9 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { getIntroduction, getStrapiURL } from "@/lib/strapi"
+import { Introduction } from "@/types/strapi"
 
-export default async function ContactPage() {
+export default function ContactPage() {
+const [introduction, setIntroduction] = useState<Introduction | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -78,6 +80,14 @@ export default async function ContactPage() {
       setIsSubmitting(false)
     }
   }
+
+  useEffect(() => {
+    const fetchIntroduction = async () => {
+      const introduction = await getIntroduction()
+      setIntroduction(introduction?.data ?? null)
+    }
+    fetchIntroduction()
+  }, [])
 
   return (
     <div className="bg-gray-50 min-h-screen py-16">
@@ -310,7 +320,7 @@ export default async function ContactPage() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              tandat198@gmail.com
+              {introduction?.attributes?.email}
             </a>
           </div>
         </div>
