@@ -53,6 +53,7 @@ module.exports = () => ({
         Key: "public/cv.html",
         Body: html,
         ACL: "public-read",
+        ContentType: "text/html",
       });
       await s3Client.send(putCommand);
       return {
