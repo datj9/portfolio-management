@@ -16,6 +16,7 @@
     "pm2:monit": "pm2 monit"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.916.0",
     "@strapi/plugin-i18n": "4.25.24",
     "@strapi/plugin-users-permissions": "4.25.24",
     "@strapi/strapi": "4.25.24",

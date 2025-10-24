@@ -7,7 +7,7 @@ export const metadata = {
   description: 'My professional work experience and career journey',
 };
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export default async function ExperiencePage() {
   try {

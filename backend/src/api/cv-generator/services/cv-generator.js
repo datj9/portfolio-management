@@ -1,7 +1,15 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
+
+const s3Client = new S3Client({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+  region: "ap-southeast-1",
+});
 
 /**
  * cv-generator service
@@ -15,21 +23,21 @@ module.exports = () => ({
     try {
       // Fetch all content
       const introduction = await strapi.entityService.findMany(
-        'api::introduction.introduction',
+        "api::introduction.introduction",
         {
-          populate: ['avatar'],
+          populate: ["avatar"],
         }
       );
 
       const workExperiences = await strapi.entityService.findMany(
-        'api::work-experience.work-experience',
+        "api::work-experience.work-experience",
         {
           filters: {
             publishedAt: {
               $notNull: true,
             },
           },
-          sort: { startDate: 'desc' },
+          sort: { startDate: "desc" },
         }
       );
 
@@ -37,16 +45,21 @@ module.exports = () => ({
       const html = this.generateHTMLTemplate(introduction, workExperiences);
 
       // Save to public folder
-      const publicPath = path.join(strapi.dirs.static.public, 'cv.html');
-      fs.writeFileSync(publicPath, html, 'utf8');
-
+      const publicPath = path.join(strapi.dirs.static.public, "cv.html");
+      fs.writeFileSync(publicPath, html, "utf8");
+      const putCommand = new PutObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: "public/cv.html",
+        Body: html,
+      });
+      await s3Client.send(putCommand);
       return {
         success: true,
         path: publicPath,
-        url: '/cv.html',
+        url: "/cv.html",
       };
     } catch (error) {
-      strapi.log.error('CV generation failed:', error);
+      strapi.log.error("CV generation failed:", error);
       throw error;
     }
   },
@@ -56,24 +69,29 @@ module.exports = () => ({
    */
   generateHTMLTemplate(introduction, workExperiences) {
     const formatDate = (dateString) => {
-      if (!dateString) return 'Present';
+      if (!dateString) return "Present";
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+      });
     };
 
     const stripHTML = (html) => {
-      if (!html) return '';
-      return html.replace(/<[^>]*>/g, '');
+      if (!html) return "";
+      return html.replace(/<[^>]*>/g, "");
     };
 
     const renderSkills = (skills) => {
-      if (!skills || !Array.isArray(skills)) return '';
-      return skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('');
+      if (!skills || !Array.isArray(skills)) return "";
+      return skills
+        .map((skill) => `<span class="skill-tag">${skill}</span>`)
+        .join("");
     };
 
     const renderList = (items) => {
-      if (!items || !Array.isArray(items)) return '';
-      return items.map(item => `<li>${item}</li>`).join('');
+      if (!items || !Array.isArray(items)) return "";
+      return items.map((item) => `<li>${item}</li>`).join("");
     };
 
     return `<!DOCTYPE html>
@@ -81,7 +99,7 @@ module.exports = () => ({
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${introduction?.fullName || 'CV'} - Curriculum Vitae</title>
+    <title>${introduction?.fullName || "CV"} - Curriculum Vitae</title>
     <style>
         * {
             margin: 0;
@@ -305,75 +323,147 @@ module.exports = () => ({
 <body>
     <div class="container">
         <header>
-            <h1>${introduction?.fullName || ''}</h1>
-            <div class="title">${introduction?.title || ''}</div>
+            <h1>${introduction?.fullName || ""}</h1>
+            <div class="title">${introduction?.title || ""}</div>
             <div class="contact-info">
-                ${introduction?.email ? `<span>📧 <a href="mailto:${introduction.email}">${introduction.email}</a></span>` : ''}
-                ${introduction?.phone ? `<span>📱 ${introduction.phone}</span>` : ''}
-                ${introduction?.location ? `<span>📍 ${introduction.location}</span>` : ''}
-                ${introduction?.website ? `<span>🌐 <a href="${introduction.website}" target="_blank">${introduction.website}</a></span>` : ''}
-                ${introduction?.linkedin ? `<span>💼 <a href="${introduction.linkedin}" target="_blank">LinkedIn</a></span>` : ''}
-                ${introduction?.github ? `<span>💻 <a href="${introduction.github}" target="_blank">GitHub</a></span>` : ''}
+                ${
+                  introduction?.email
+                    ? `<span>📧 <a href="mailto:${introduction.email}">${introduction.email}</a></span>`
+                    : ""
+                }
+                ${
+                  introduction?.phone
+                    ? `<span>📱 ${introduction.phone}</span>`
+                    : ""
+                }
+                ${
+                  introduction?.location
+                    ? `<span>📍 ${introduction.location}</span>`
+                    : ""
+                }
+                ${
+                  introduction?.website
+                    ? `<span>🌐 <a href="${introduction.website}" target="_blank">${introduction.website}</a></span>`
+                    : ""
+                }
+                ${
+                  introduction?.linkedin
+                    ? `<span>💼 <a href="${introduction.linkedin}" target="_blank">LinkedIn</a></span>`
+                    : ""
+                }
+                ${
+                  introduction?.github
+                    ? `<span>💻 <a href="${introduction.github}" target="_blank">GitHub</a></span>`
+                    : ""
+                }
             </div>
         </header>
         
         <div class="content">
-            ${introduction?.summary ? `
+            ${
+              introduction?.summary
+                ? `
             <section class="summary-section">
                 <h2>Summary</h2>
                 <div class="summary">${stripHTML(introduction.summary)}</div>
             </section>
-            ` : ''}
+            `
+                : ""
+            }
             
-            ${introduction?.skills ? `
+            ${
+              introduction?.skills
+                ? `
             <section class="skills-section">
                 <h2>Skills</h2>
                 <div class="skills">
                     ${renderSkills(introduction.skills)}
                 </div>
             </section>
-            ` : ''}
+            `
+                : ""
+            }
             
-            ${workExperiences && workExperiences.length > 0 ? `
+            ${
+              workExperiences && workExperiences.length > 0
+                ? `
             <section class="experience-section">
                 <h2>Work Experience</h2>
-                ${workExperiences.map(exp => `
+                ${workExperiences
+                  .map(
+                    (exp) => `
                     <div class="experience-item">
                         <div class="experience-header">
                             <div class="experience-title">
-                                <h3>${exp.position || ''}</h3>
-                                <div class="company">${exp.company || ''}</div>
-                                ${exp.location ? `<div class="location">${exp.location}</div>` : ''}
+                                <h3>${exp.position || ""}</h3>
+                                <div class="company">${exp.company || ""}</div>
+                                ${
+                                  exp.location
+                                    ? `<div class="location">${exp.location}</div>`
+                                    : ""
+                                }
                             </div>
                             <div class="date-range">
-                                ${formatDate(exp.startDate)} - ${exp.current ? 'Present' : formatDate(exp.endDate)}
+                                ${formatDate(exp.startDate)} - ${
+                      exp.current ? "Present" : formatDate(exp.endDate)
+                    }
                             </div>
                         </div>
-                        ${exp.description ? `<div class="description">${stripHTML(exp.description)}</div>` : ''}
-                        ${exp.achievements && Array.isArray(exp.achievements) && exp.achievements.length > 0 ? `
+                        ${
+                          exp.description
+                            ? `<div class="description">${stripHTML(
+                                exp.description
+                              )}</div>`
+                            : ""
+                        }
+                        ${
+                          exp.achievements &&
+                          Array.isArray(exp.achievements) &&
+                          exp.achievements.length > 0
+                            ? `
                             <div class="achievements">
                                 <ul>
                                     ${renderList(exp.achievements)}
                                 </ul>
                             </div>
-                        ` : ''}
-                        ${exp.technologies && Array.isArray(exp.technologies) && exp.technologies.length > 0 ? `
+                        `
+                            : ""
+                        }
+                        ${
+                          exp.technologies &&
+                          Array.isArray(exp.technologies) &&
+                          exp.technologies.length > 0
+                            ? `
                             <div class="technologies">
-                                ${exp.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                                ${exp.technologies
+                                  .map(
+                                    (tech) =>
+                                      `<span class="tech-tag">${tech}</span>`
+                                  )
+                                  .join("")}
                             </div>
-                        ` : ''}
+                        `
+                            : ""
+                        }
                     </div>
-                `).join('')}
+                `
+                  )
+                  .join("")}
             </section>
-            ` : ''}
+            `
+                : ""
+            }
         </div>
         
         <footer>
-            <p>Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p>Generated on ${new Date().toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}</p>
         </footer>
     </div>
 </body>
 </html>`;
   },
 });
-

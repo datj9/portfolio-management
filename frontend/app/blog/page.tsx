@@ -7,7 +7,7 @@ export const metadata = {
   description: 'Read my latest blog posts and articles',
 };
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 export default async function BlogPage() {
   try {

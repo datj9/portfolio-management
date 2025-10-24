@@ -7,7 +7,7 @@ import { Blog } from '@/types/strapi';
 import { formatDate } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 interface BlogPostPageProps {
   params: {

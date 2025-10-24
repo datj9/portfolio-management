@@ -6,7 +6,7 @@ import { Introduction, StrapiResponse, WorkExperience, Blog } from '@/types/stra
 import { WorkExperienceCard } from '@/components/WorkExperienceCard';
 import { BlogCard } from '@/components/BlogCard';
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 300; // Revalidate every 60 seconds
 
 export default async function HomePage() {
   try {
