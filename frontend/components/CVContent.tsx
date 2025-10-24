@@ -12,9 +12,9 @@ interface CVContentProps {
 export default function CVContent({ introduction, workExperiences }: CVContentProps) {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showMode, setShowMode] = useState<'rendered' | 'iframe'>('rendered');
-  const cvUrl = getStrapiURL('/cv.html');
-
-  const { fullName, title, email, phone, location, website, linkedin, github, summary, skills } = introduction.attributes;
+  
+  const { fullName, title, email, phone, location, website, linkedin, github, summary, skills, cvUrl: savedCvUrl } = introduction.attributes;
+  const cvUrl = savedCvUrl || getStrapiURL('/cv.html');
 
   const handleDownloadPDF = async () => {
     setIsGeneratingPDF(true);

@@ -38,6 +38,7 @@ export interface Introduction {
     github?: string;
     summary: string;
     skills?: string[];
+    cvUrl?: string;
     avatar?: {
       data: StrapiImage | null;
     };
