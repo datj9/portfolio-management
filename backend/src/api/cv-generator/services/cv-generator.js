@@ -261,15 +261,17 @@ module.exports = () => ({
         }
         
         .skill-tag, .tech-tag {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             vertical-align: middle;
-            text-align: center;
             background: #0284c7;
             color: white;
             padding: 5px 12px;
             border-radius: 15px;
             font-size: 0.85em;
             margin: 5px 5px 5px 0;
+            line-height: 1.2;
         }
         
         .tech-tag {
