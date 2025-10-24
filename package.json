@@ -29,5 +29,6 @@
   "author": {
     "name": "Portfolio Developer"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@4.10.3"
 }

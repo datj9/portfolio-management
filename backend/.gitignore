@@ -71,6 +71,10 @@ $RECYCLE.BIN/
 *.sqlite
 *.sqlite3
 
+# PM2 logs
+logs/*.log
+!logs/.gitkeep
+
 
 ############################
 # Misc.

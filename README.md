@@ -275,11 +275,32 @@ yarn start
 - Railway
 - Render
 
-**Steps:**
-1. Set up database (PostgreSQL recommended for production)
+**Development:**
+```bash
+cd backend
+yarn develop  # Auto-reload on changes
+```
+
+**Production with PM2** (recommended):
+```bash
+cd backend
+yarn build     # Build admin panel
+yarn pm2:start # Start with PM2 process manager
+```
+
+PM2 provides:
+- Auto-restart on crashes
+- Process monitoring
+- Log management
+- Memory management
+
+See **[PM2_GUIDE.md](./PM2_GUIDE.md)** for complete PM2 documentation.
+
+**Production Steps:**
+1. Set up PostgreSQL database
 2. Configure environment variables in `backend/.env`
-3. Build: `yarn build:backend`
-4. Start: `yarn start:backend`
+3. Build: `cd backend && yarn build`
+4. Start: `yarn pm2:start` (or `yarn start` without PM2)
 
 ### Frontend (Next.js)
 
@@ -322,13 +343,15 @@ Detailed documentation is available in:
 - **[QUICK_START.md](./QUICK_START.md)** - Get started in 5 minutes
 - **[PORTFOLIO_SETUP.md](./PORTFOLIO_SETUP.md)** - Complete Strapi backend guide
 - **[FRONTEND_SETUP.md](./FRONTEND_SETUP.md)** - Complete Next.js frontend guide
+- **[PM2_GUIDE.md](./PM2_GUIDE.md)** - PM2 process manager guide
 - **[frontend/README.md](./frontend/README.md)** - Frontend technical details
 
 ## 🛠️ Tech Stack
 
 ### Backend
 - **Strapi 4.10.7** - Headless CMS
-- **SQLite** - Database (development)
+- **PostgreSQL** - Database
+- **PM2** - Process manager (production)
 - **Node.js** - Runtime
 
 ### Frontend
