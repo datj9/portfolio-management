@@ -144,6 +144,14 @@ module.exports = () => ({
       return items.map((item) => `<li>${item}</li>`).join("");
     };
 
+    // render markdown summary
+    const renderSummary = (summary) => {
+      if (!summary) return "";
+      return `<div class="summary">${markdownIt({ html: true }).render(
+        summary
+      )}</div>`;
+    };
+
     // render markdown description
     const renderDescription = (description) => {
       if (!description) return "";
@@ -429,7 +437,7 @@ module.exports = () => ({
                 ? `
             <section class="summary-section">
                 <h2>Summary</h2>
-                <div class="summary">${stripHTML(introduction.summary)}</div>
+                ${renderSummary(introduction.summary)}
             </section>
             `
                 : ""
