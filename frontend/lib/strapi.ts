@@ -38,7 +38,7 @@ async function fetchAPI(path: string, options: RequestInit = {}) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`Strapi API Error (${response.status}):`, errorText);
-      
+
       if (response.status === 403) {
         throw new Error(
           `Access Forbidden (403): Please set Public role permissions in Strapi admin.\n` +
@@ -46,7 +46,7 @@ async function fetchAPI(path: string, options: RequestInit = {}) {
           `See PERMISSIONS_SETUP.md for detailed instructions.`
         );
       }
-      
+
       throw new Error(`Failed to fetch from Strapi: ${response.statusText} (${response.status})`);
     }
 
@@ -59,6 +59,10 @@ async function fetchAPI(path: string, options: RequestInit = {}) {
 
 export async function getIntroduction() {
   return fetchAPI('/introduction?populate=avatar');
+}
+
+export async function getGeneratedProfile() {
+  return fetchAPI('/generated-profile?populate=cvUrl');
 }
 
 export async function getWorkExperiences() {

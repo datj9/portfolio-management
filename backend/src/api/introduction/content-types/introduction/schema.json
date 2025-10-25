@@ -47,16 +47,13 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "skills": {
       "type": "json",
       "required": false
-    },
-    "cvUrl": {
-      "type": "string",
-      "required": false
     }
   }
 }
-

@@ -427,6 +427,37 @@ export interface ApiContactRequestContactRequest extends Schema.CollectionType {
   };
 }
 
+export interface ApiGeneratedProfileGeneratedProfile extends Schema.SingleType {
+  collectionName: 'generated_profiles';
+  info: {
+    description: '';
+    displayName: 'Profile';
+    pluralName: 'generated-profiles';
+    singularName: 'generated-profile';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::generated-profile.generated-profile',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    cvUrl: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::generated-profile.generated-profile',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiIntroductionIntroduction extends Schema.SingleType {
   collectionName: 'introduction';
   info: {
@@ -447,7 +478,6 @@ export interface ApiIntroductionIntroduction extends Schema.SingleType {
       'admin::user'
     > &
       Attribute.Private;
-    cvUrl: Attribute.String;
     email: Attribute.Email & Attribute.Required;
     fullName: Attribute.String & Attribute.Required;
     github: Attribute.String;
@@ -946,6 +976,7 @@ declare module '@strapi/types' {
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
       'api::contact-request.contact-request': ApiContactRequestContactRequest;
+      'api::generated-profile.generated-profile': ApiGeneratedProfileGeneratedProfile;
       'api::introduction.introduction': ApiIntroductionIntroduction;
       'api::work-experience.work-experience': ApiWorkExperienceWorkExperience;
       'plugin::content-releases.release': PluginContentReleasesRelease;

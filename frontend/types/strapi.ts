@@ -47,6 +47,13 @@ export interface Introduction {
   };
 }
 
+export interface GeneratedProfile {
+  id: number;
+  attributes: {
+    cvUrl: string;
+  };
+}
+
 export interface WorkExperience {
   id: number;
   attributes: {
