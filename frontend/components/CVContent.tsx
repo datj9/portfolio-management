@@ -4,7 +4,7 @@ import { useState } from "react"
 import { GeneratedProfile, Introduction, WorkExperience } from "@/types/strapi"
 import { getStrapiURL } from "@/lib/strapi"
 import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
-import { DesignSystemSelector } from "@/components/DesignSystemSelector"
+import Markdown from "react-markdown"
 
 interface CVContentProps {
   introduction: Introduction
@@ -289,10 +289,9 @@ export default function CVContent({
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Professional Summary
               </h2>
-              <div
-                className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: summary }}
-              />
+              <div className="text-gray-700 leading-relaxed prose prose-sm max-w-none">
+                <Markdown>{summary}</Markdown>
+              </div>
             </section>
           )}
 
@@ -338,6 +337,7 @@ export default function CVContent({
                       description,
                       achievements,
                       technologies,
+                      companyUrl,
                     } = exp.attributes
 
                     return (
@@ -348,9 +348,20 @@ export default function CVContent({
                         <h3 className="text-xl font-bold text-gray-900">
                           {position}
                         </h3>
-                        <p className="text-lg text-primary-600 font-semibold">
-                          {company}
-                        </p>
+                        {(companyUrl?.length ?? 0) > 0 ? (
+                          <a
+                            href={companyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-lg text-primary-600 font-semibold"
+                          >
+                            {company}
+                          </a>
+                        ) : (
+                          <p className="text-lg text-primary-600 font-semibold">
+                            {company}
+                          </p>
+                        )}
                         <p className="text-sm text-gray-600 mb-2">
                           {formatDate(startDate)} -{" "}
                           {current ? "Present" : formatDate(endDate!)}

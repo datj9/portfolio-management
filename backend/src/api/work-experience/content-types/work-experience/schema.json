@@ -50,7 +50,9 @@
     "order": {
       "type": "integer",
       "default": 0
+    },
+    "companyUrl": {
+      "type": "string"
     }
   }
 }
-

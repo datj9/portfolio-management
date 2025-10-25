@@ -58,6 +58,7 @@ export interface WorkExperience {
   id: number;
   attributes: {
     company: string;
+    companyUrl?: string;
     position: string;
     location?: string;
     startDate: string;

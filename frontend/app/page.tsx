@@ -1,13 +1,14 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { getIntroduction, getWorkExperiences, getBlogs } from '@/lib/strapi';
-import { getStrapiMediaURL } from '@/lib/strapi';
-import { Introduction, StrapiResponse, WorkExperience, Blog } from '@/types/strapi';
-import { WorkExperienceCard } from '@/components/WorkExperienceCard';
-import { BlogCard } from '@/components/BlogCard';
-import { IMMEDIATE_REVALIDATE_TIME } from '@/common/constants';
+import Image from "next/image"
+import Link from "next/link"
+import { getIntroduction, getWorkExperiences, getBlogs } from "@/lib/strapi"
+import { getStrapiMediaURL } from "@/lib/strapi"
+import { Introduction, WorkExperience, Blog } from "@/types/strapi"
+import { WorkExperienceCard } from "@/components/WorkExperienceCard"
+import { BlogCard } from "@/components/BlogCard"
+import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
+import Markdown from "react-markdown"
 
-export const revalidate = IMMEDIATE_REVALIDATE_TIME;
+export const revalidate = IMMEDIATE_REVALIDATE_TIME
 
 export default async function HomePage() {
   try {
@@ -15,11 +16,11 @@ export default async function HomePage() {
       getIntroduction(),
       getWorkExperiences(),
       getBlogs(1, 3), // Get latest 3 blogs
-    ]);
+    ])
 
-    const introduction: Introduction | null = introResponse?.data || null;
-    const workExperiences: WorkExperience[] = workExpResponse?.data || [];
-    const blogs: Blog[] = blogsResponse?.data || [];
+    const introduction: Introduction | null = introResponse?.data || null
+    const workExperiences: WorkExperience[] = workExpResponse?.data || []
+    const blogs: Blog[] = blogsResponse?.data || []
 
     if (!introduction) {
       return (
@@ -28,11 +29,23 @@ export default async function HomePage() {
             No introduction data available.
           </p>
         </div>
-      );
+      )
     }
 
-    const { fullName, title, email, phone, location, website, linkedin, github, summary, skills, avatar } = introduction.attributes;
-    const avatarUrl = getStrapiMediaURL(avatar?.data?.attributes.url);
+    const {
+      fullName,
+      title,
+      email,
+      phone,
+      location,
+      website,
+      linkedin,
+      github,
+      summary,
+      skills,
+      avatar,
+    } = introduction.attributes
+    const avatarUrl = getStrapiMediaURL(avatar?.data?.attributes.url)
 
     return (
       <div className="bg-gray-50">
@@ -51,17 +64,28 @@ export default async function HomePage() {
                 </div>
               )}
               <div className="flex-1 text-center md:text-left">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">{fullName}</h1>
+                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                  {fullName}
+                </h1>
                 <p className="text-xl md:text-2xl mb-6 opacity-95">{title}</p>
-                
+
                 <div className="flex flex-wrap gap-4 justify-center md:justify-start text-sm">
                   {email && (
-                    <a href={`mailto:${email}`} className="flex items-center gap-2 hover:underline">
+                    <a
+                      href={`mailto:${email}`}
+                      className="flex items-center gap-2 hover:underline"
+                    >
                       📧 {email}
                     </a>
                   )}
-                  {phone && <span className="flex items-center gap-2">📱 {phone}</span>}
-                  {location && <span className="flex items-center gap-2">📍 {location}</span>}
+                  {phone && (
+                    <span className="flex items-center gap-2">📱 {phone}</span>
+                  )}
+                  {location && (
+                    <span className="flex items-center gap-2">
+                      📍 {location}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex flex-wrap gap-4 mt-6 justify-center md:justify-start">
@@ -105,10 +129,9 @@ export default async function HomePage() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="bg-white rounded-lg shadow-md p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">About Me</h2>
-            <div 
-              className="text-lg text-gray-700 leading-relaxed prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: summary }}
-            />
+            <div className="text-lg text-gray-700 leading-relaxed prose prose-lg max-w-none">
+              <Markdown>{summary}</Markdown>
+            </div>
           </div>
         </section>
 
@@ -116,7 +139,9 @@ export default async function HomePage() {
         {workExperiences.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">Recent Experience</h2>
+              <h2 className="text-3xl font-bold text-gray-900">
+                Recent Experience
+              </h2>
               <Link
                 href="/experience"
                 className="text-primary-600 hover:text-primary-700 font-semibold"
@@ -126,7 +151,10 @@ export default async function HomePage() {
             </div>
             <div className="space-y-6">
               {workExperiences.slice(0, 2).map((experience) => (
-                <WorkExperienceCard key={experience.id} experience={experience} />
+                <WorkExperienceCard
+                  key={experience.id}
+                  experience={experience}
+                />
               ))}
             </div>
           </section>
@@ -153,7 +181,9 @@ export default async function HomePage() {
         {blogs.length > 0 && (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">Latest Blog Posts</h2>
+              <h2 className="text-3xl font-bold text-gray-900">
+                Latest Blog Posts
+              </h2>
               <Link
                 href="/blog"
                 className="text-primary-600 hover:text-primary-700 font-semibold"
@@ -169,19 +199,21 @@ export default async function HomePage() {
           </section>
         )}
       </div>
-    );
+    )
   } catch (error) {
-    console.error('Error loading home page:', error);
+    console.error("Error loading home page:", error)
     return (
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-          <h2 className="text-xl font-bold text-red-800 mb-2">Error Loading Content</h2>
+          <h2 className="text-xl font-bold text-red-800 mb-2">
+            Error Loading Content
+          </h2>
           <p className="text-red-600">
-            Unable to load content from Strapi. Please ensure Strapi is running and accessible.
+            Unable to load content from Strapi. Please ensure Strapi is running
+            and accessible.
           </p>
         </div>
       </div>
-    );
+    )
   }
 }
-

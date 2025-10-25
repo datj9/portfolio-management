@@ -511,6 +511,7 @@ export interface ApiWorkExperienceWorkExperience extends Schema.CollectionType {
   attributes: {
     achievements: Attribute.JSON;
     company: Attribute.String & Attribute.Required;
+    companyUrl: Attribute.String;
     createdAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::work-experience.work-experience',
