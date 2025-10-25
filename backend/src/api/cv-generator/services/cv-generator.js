@@ -80,26 +80,14 @@ module.exports = () => ({
       const generatedProfile = await strapi.entityService.findMany(
         "api::generated-profile.generated-profile",
         {
-          filters: {
-            publishedAt: {
-              $notNull: true,
-            },
-          },
+          populate: ["cvUrl", "id"],
         }
       );
+      strapi.log.info("Previous generated profile:", generatedProfile);
       if (generatedProfile != null) {
         await strapi.entityService.update(
           "api::generated-profile.generated-profile",
           generatedProfile.id,
-          {
-            data: {
-              cvUrl: getPublicUrl(key),
-            },
-          }
-        );
-      } else {
-        await strapi.entityService.create(
-          "api::generated-profile.generated-profile",
           {
             data: {
               cvUrl: getPublicUrl(key),
