@@ -62,10 +62,7 @@ module.exports = () => ({
       // Save to public folder
       const publicPath = path.join(strapi.dirs.static.public, "cv.html");
       fs.writeFileSync(publicPath, html, "utf8");
-      const currentTimeInHoChiMinh = new TZDate(
-        new Date(),
-        "Asia/Ho_Chi_Minh"
-      );
+      const currentTimeInHoChiMinh = new TZDate(new Date(), "Asia/Ho_Chi_Minh");
       const key = `public/cv_${format(
         currentTimeInHoChiMinh,
         "yyyy-MM-dd HH:mm:ss"
@@ -79,16 +76,37 @@ module.exports = () => ({
       });
       await s3Client.send(putCommand);
 
-      // update introduction with cv url
-      await strapi.entityService.update(
-        "api::introduction.introduction",
-        introduction.id,
+      // update generated profile with cv url
+      const generatedProfile = await strapi.entityService.findMany(
+        "api::generated-profile.generated-profile",
         {
-          data: {
-            cvUrl: getPublicUrl(key),
+          filters: {
+            publishedAt: {
+              $notNull: true,
+            },
           },
         }
       );
+      if (generatedProfile != null) {
+        await strapi.entityService.update(
+          "api::generated-profile.generated-profile",
+          generatedProfile.id,
+          {
+            data: {
+              cvUrl: getPublicUrl(key),
+            },
+          }
+        );
+      } else {
+        await strapi.entityService.create(
+          "api::generated-profile.generated-profile",
+          {
+            data: {
+              cvUrl: getPublicUrl(key),
+            },
+          }
+        );
+      }
 
       return {
         success: true,
