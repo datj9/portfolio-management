@@ -369,10 +369,9 @@ export default function CVContent({
                         </p>
 
                         {description && (
-                          <div
-                            className="text-gray-700 mb-3 prose prose-sm max-w-none"
-                            dangerouslySetInnerHTML={{ __html: description }}
-                          />
+                          <div className="text-gray-700 mb-3 prose prose-sm max-w-none">
+                            <Markdown>{description}</Markdown>
+                          </div>
                         )}
 
                         {achievements && achievements.length > 0 && (

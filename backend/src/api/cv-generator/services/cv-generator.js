@@ -7,6 +7,7 @@ const { format } = require("date-fns");
 const { TZDate } = require("@date-fns/tz");
 const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME;
 const AWS_REGION = process.env.AWS_REGION ?? "ap-southeast-1";
+const markdownIt = require("markdown-it");
 
 const s3Client = new S3Client({
   credentials: {
@@ -84,7 +85,11 @@ module.exports = () => ({
         }
       );
       strapi.log.info(
-        `Previous generated profile:\n ${JSON.stringify(generatedProfile, null, 2)}`,
+        `Previous generated profile:\n ${JSON.stringify(
+          generatedProfile,
+          null,
+          2
+        )}`
       );
       if (generatedProfile != null) {
         await strapi.entityService.update(
@@ -137,6 +142,14 @@ module.exports = () => ({
     const renderList = (items) => {
       if (!items || !Array.isArray(items)) return "";
       return items.map((item) => `<li>${item}</li>`).join("");
+    };
+
+    // render markdown description
+    const renderDescription = (description) => {
+      if (!description) return "";
+      return `<div class="description">${markdownIt({ html: true }).render(
+        description
+      )}</div>`;
     };
 
     return `<!DOCTYPE html>
@@ -462,13 +475,7 @@ module.exports = () => ({
                     }
                             </div>
                         </div>
-                        ${
-                          exp.description
-                            ? `<div class="description">${stripHTML(
-                                exp.description
-                              )}</div>`
-                            : ""
-                        }
+                        ${renderDescription(exp?.description)}
                         ${
                           exp.achievements &&
                           Array.isArray(exp.achievements) &&
