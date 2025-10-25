@@ -436,7 +436,7 @@ export interface ApiGeneratedProfileGeneratedProfile extends Schema.SingleType {
     singularName: 'generated-profile';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Attribute.DateTime;
@@ -447,7 +447,6 @@ export interface ApiGeneratedProfileGeneratedProfile extends Schema.SingleType {
     > &
       Attribute.Private;
     cvUrl: Attribute.String;
-    publishedAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::generated-profile.generated-profile',
