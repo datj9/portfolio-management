@@ -3,14 +3,28 @@
 const fs = require("fs");
 const path = require("path");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { format } = require("date-fns");
+const { TZDate } = require("@date-fns/tz");
+const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME;
+const AWS_REGION = process.env.AWS_REGION ?? "ap-southeast-1";
 
 const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_KEY,
   },
-  region: "ap-southeast-1",
+  region: AWS_REGION,
 });
+
+/**
+ *
+ * @param {*} key
+ * @returns {string} public url
+ * Example: https://datnguyen-portfolio.s3.ap-southeast-1.amazonaws.com/public/cv.html
+ */
+const getPublicUrl = (key) => {
+  return `https://${AWS_BUCKET_NAME}.s3.${AWS_REGION}.amazonaws.com/${key}`;
+};
 
 /**
  * cv-generator service
@@ -48,14 +62,34 @@ module.exports = () => ({
       // Save to public folder
       const publicPath = path.join(strapi.dirs.static.public, "cv.html");
       fs.writeFileSync(publicPath, html, "utf8");
+      const currentTimeInHoChiMinh = new TZDate(
+        currentTime,
+        "Asia/Ho_Chi_Minh"
+      );
+      const key = `public/cv_${format(
+        currentTimeInHoChiMinh,
+        "yyyy-MM-dd HH:mm:ss"
+      )}.html`;
       const putCommand = new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: "public/cv.html",
+        Bucket: AWS_BUCKET_NAME,
+        Key: key,
         Body: html,
         ACL: "public-read",
         ContentType: "text/html",
       });
       await s3Client.send(putCommand);
+
+      // update introduction with cv url
+      await strapi.entityService.update(
+        "api::introduction.introduction",
+        introduction.id,
+        {
+          data: {
+            cvUrl: getPublicUrl(key),
+          },
+        }
+      );
+
       return {
         success: true,
         path: publicPath,
