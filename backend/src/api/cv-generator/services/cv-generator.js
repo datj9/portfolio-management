@@ -63,7 +63,7 @@ module.exports = () => ({
       const publicPath = path.join(strapi.dirs.static.public, "cv.html");
       fs.writeFileSync(publicPath, html, "utf8");
       const currentTimeInHoChiMinh = new TZDate(
-        currentTime,
+        new Date(),
         "Asia/Ho_Chi_Minh"
       );
       const key = `public/cv_${format(
