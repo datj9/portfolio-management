@@ -83,7 +83,9 @@ module.exports = () => ({
           populate: ["cvUrl", "id"],
         }
       );
-      strapi.log.info("Previous generated profile:", generatedProfile);
+      strapi.log.info(
+        `Previous generated profile:\n ${JSON.stringify(generatedProfile, null, 2)}`,
+      );
       if (generatedProfile != null) {
         await strapi.entityService.update(
           "api::generated-profile.generated-profile",
