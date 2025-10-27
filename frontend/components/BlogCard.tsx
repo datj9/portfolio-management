@@ -1,28 +1,32 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Blog } from '@/types/strapi';
-import { formatDate } from '@/lib/utils';
-import { getStrapiMediaURL } from '@/lib/strapi';
+import Link from "next/link"
+import Image from "next/image"
+import { Blog } from "@/types/strapi"
+import { formatDate } from "@/lib/utils"
+import { getStrapiMediaURL } from "@/lib/strapi"
+import Markdown from "react-markdown"
 
 interface BlogCardProps {
-  blog: Blog;
+  blog: Blog
 }
 
 export function BlogCard({ blog }: BlogCardProps) {
-  const { title, slug, description, publishedDate, tags, readingTime, featuredImage } = blog.attributes;
-  const imageUrl = getStrapiMediaURL(featuredImage?.data?.attributes.url);
+  const {
+    title,
+    slug,
+    description,
+    publishedDate,
+    tags,
+    readingTime,
+    featuredImage,
+  } = blog.attributes
+  const imageUrl = getStrapiMediaURL(featuredImage?.data?.attributes.url)
 
   return (
     <Link href={`/blog/${slug}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer h-full flex flex-col">
         {imageUrl && (
           <div className="relative h-48 w-full bg-gray-200">
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              className="object-cover"
-            />
+            <Image src={imageUrl} alt={title} fill className="object-cover" />
           </div>
         )}
         <div className="p-6 flex-1 flex flex-col">
@@ -30,13 +34,15 @@ export function BlogCard({ blog }: BlogCardProps) {
             {publishedDate && <span>{formatDate(publishedDate)}</span>}
             {readingTime && <span>• {readingTime} min read</span>}
           </div>
-          
+
           <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-primary-600">
-            {title}
+            <Markdown>{title}</Markdown>
           </h3>
-          
-          <p className="text-gray-600 mb-4 flex-1 line-clamp-3">{description}</p>
-          
+
+          <p className="text-gray-600 mb-4 flex-1 line-clamp-3">
+            <Markdown>{description}</Markdown>
+          </p>
+
           {tags && tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {tags.map((tag, tagIndex) => (
@@ -52,6 +58,5 @@ export function BlogCard({ blog }: BlogCardProps) {
         </div>
       </div>
     </Link>
-  );
+  )
 }
-
