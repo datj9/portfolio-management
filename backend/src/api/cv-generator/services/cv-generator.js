@@ -160,6 +160,16 @@ module.exports = () => ({
       )}</div>`;
     };
 
+    const renderCompany = (companyName, companyUrl) => {
+      if (!companyName || companyName?.trim()?.length === 0) {
+        return "";
+      }
+      if (companyUrl) {
+        return `<a href="${companyUrl}" target="_blank">${companyName}</a>`;
+      }
+      return companyName;
+    };
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -470,7 +480,10 @@ module.exports = () => ({
                         <div class="experience-header">
                             <div class="experience-title">
                                 <h3>${exp.position || ""}</h3>
-                                <div class="company">${exp.company || ""}</div>
+                                <div class="company">${renderCompany(
+                                  exp.company,
+                                  exp.companyUrl
+                                )}</div>
                                 ${
                                   exp.location
                                     ? `<div class="location">${exp.location}</div>`
