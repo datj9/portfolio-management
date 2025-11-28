@@ -3,8 +3,8 @@ module.exports = ({ env }) => ({
     config: {
       provider: 'amazon-ses',
       providerOptions: {
-        key: env('AWS_ACCESS_KEY_ID'),
-        secret: env('AWS_SECRET_ACCESS_KEY'),
+        key: env('AWS_ACCESS_KEY'),
+        secret: env('AWS_SECRET_KEY'),
         amazon: `https://email.${env('AWS_REGION')}.amazonaws.com`,
       },
       settings: {
