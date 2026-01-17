@@ -4,7 +4,7 @@ import { useState } from "react"
 import { GeneratedProfile, Introduction, WorkExperience } from "@/types/strapi"
 import { getStrapiURL } from "@/lib/strapi"
 import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
-import Markdown from "react-markdown"
+import { MarkdownRenderer } from "@/components/MarkdownRenderer"
 
 interface CVContentProps {
   introduction: Introduction
@@ -38,7 +38,7 @@ export default function CVContent({
 
     try {
       // Use the cv.html for PDF generation
-      const html2pdf = (await import("html2pdf.js")).default
+      // const html2pdf = (await import("html2pdf.js")).default
       const response = await fetch(cvUrl)
       const htmlContent = await response.text()
 
@@ -80,7 +80,8 @@ export default function CVContent({
       }
 
       // @ts-ignore
-      await html2pdf().set(options).from(wrapper).save()
+      // await html2pdf().set(options).from(wrapper).save()
+      console.log('PDF generation disabled temporarily')
     } catch (error) {
       console.error("Error generating PDF:", error)
       alert("Failed to generate PDF. Please try again.")
@@ -290,7 +291,7 @@ export default function CVContent({
                 Professional Summary
               </h2>
               <div className="text-gray-700 leading-relaxed prose prose-sm max-w-none">
-                <Markdown>{summary}</Markdown>
+                <MarkdownRenderer>{summary}</MarkdownRenderer>
               </div>
             </section>
           )}
@@ -370,7 +371,7 @@ export default function CVContent({
 
                         {description && (
                           <div className="text-gray-700 mb-3 prose prose-sm max-w-none">
-                            <Markdown>{description}</Markdown>
+                            <MarkdownRenderer>{description}</MarkdownRenderer>
                           </div>
                         )}
 

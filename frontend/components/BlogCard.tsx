@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Blog } from "@/types/strapi"
 import { formatDate } from "@/lib/utils"
 import { getStrapiMediaURL } from "@/lib/strapi"
-import Markdown from "react-markdown"
+import { MarkdownRenderer } from "@/components/MarkdownRenderer"
 
 interface BlogCardProps {
   blog: Blog
@@ -36,11 +36,11 @@ export function BlogCard({ blog }: BlogCardProps) {
           </div>
 
           <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-primary-600">
-            <Markdown>{title}</Markdown>
+            <MarkdownRenderer>{title}</MarkdownRenderer>
           </h3>
 
           <p className="text-gray-600 mb-4 flex-1 line-clamp-3">
-            <Markdown>{description}</Markdown>
+            <MarkdownRenderer>{description}</MarkdownRenderer>
           </p>
 
           {tags && tags.length > 0 && (

@@ -6,9 +6,11 @@ import { Introduction, WorkExperience, Blog } from "@/types/strapi"
 import { WorkExperienceCard } from "@/components/WorkExperienceCard"
 import { BlogCard } from "@/components/BlogCard"
 import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
-import Markdown from "react-markdown"
+import { MarkdownRenderer } from "@/components/MarkdownRenderer"
 
-export const revalidate = IMMEDIATE_REVALIDATE_TIME
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+export const revalidate = 1800;
 
 export default async function HomePage() {
   try {
@@ -130,7 +132,7 @@ export default async function HomePage() {
           <div className="bg-white rounded-lg shadow-md p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">About Me</h2>
             <div className="text-lg text-gray-700 leading-relaxed prose prose-lg max-w-none">
-              <Markdown>{summary}</Markdown>
+              <MarkdownRenderer>{summary}</MarkdownRenderer>
             </div>
           </div>
         </section>

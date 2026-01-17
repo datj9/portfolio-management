@@ -8,7 +8,9 @@ export const metadata = {
   description: 'Read my latest blog posts and articles',
 };
 
-export const revalidate = IMMEDIATE_REVALIDATE_TIME;
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+export const revalidate = 1800;;
 
 export default async function BlogPage() {
   try {

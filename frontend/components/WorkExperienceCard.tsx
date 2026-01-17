@@ -1,6 +1,6 @@
 import { WorkExperience } from "@/types/strapi"
 import { formatDate } from "@/lib/utils"
-import Markdown from "react-markdown"
+import { MarkdownRenderer } from "@/components/MarkdownRenderer"
 
 interface WorkExperienceCardProps {
   experience: WorkExperience
@@ -45,7 +45,7 @@ export function WorkExperienceCard({ experience }: WorkExperienceCardProps) {
       </div>
 
       <div className="text-gray-700 mb-4 prose prose-sm max-w-none">
-        <Markdown>{description}</Markdown>
+        <MarkdownRenderer>{description}</MarkdownRenderer>
       </div>
 
       {achievements && achievements.length > 0 && (

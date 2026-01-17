@@ -5,19 +5,20 @@ import { getBlogBySlug } from "@/lib/strapi"
 import { getStrapiMediaURL } from "@/lib/strapi"
 import { Blog } from "@/types/strapi"
 import { formatDate } from "@/lib/utils"
-import ReactMarkdown from "react-markdown"
-import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
-import Markdown from "react-markdown"
+import { MarkdownRenderer } from "@/components/MarkdownRenderer"
 
-export const revalidate = IMMEDIATE_REVALIDATE_TIME
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+export const revalidate = 1800;
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage(props: BlogPostPageProps) {
+  const params = await props.params;
   try {
     const response = await getBlogBySlug(params.slug)
     const blogs: Blog[] = response?.data || []
@@ -60,7 +61,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Article Header */}
           <header className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              <Markdown>{title}</Markdown>
+              <MarkdownRenderer>{title}</MarkdownRenderer>
             </h1>
 
             <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-4">
@@ -71,7 +72,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             {description && (
               <p className="text-xl text-gray-600 leading-relaxed">
-                <Markdown>{description}</Markdown>
+                <MarkdownRenderer>{description}</MarkdownRenderer>
               </p>
             )}
 
@@ -93,7 +94,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Article Content */}
           <div className="bg-white rounded-lg shadow-md p-8 md:p-12">
             <div className="prose prose-lg max-w-none">
-              <Markdown>{content}</Markdown>
+              <MarkdownRenderer>{content}</MarkdownRenderer>
             </div>
           </div>
 
