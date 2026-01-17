@@ -8,7 +8,6 @@ import { formatDate } from "@/lib/utils"
 import { MarkdownRenderer } from "@/components/MarkdownRenderer"
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
 export const revalidate = 1800;
 
 interface BlogPostPageProps {

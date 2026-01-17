@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+
 export const revalidate = 1800;;
 
 export default async function BlogPage() {

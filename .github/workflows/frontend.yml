@@ -30,7 +30,7 @@ jobs:
         working-directory: frontend
         run: |
           rm ../yarn.lock || true
-          npm run pages:build
+          npm run build:worker
 
       - name: Deploy to Cloudflare Pages
         working-directory: frontend
