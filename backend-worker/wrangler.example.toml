@@ -1,0 +1,50 @@
+name = "portfolio-worker"
+main = "dist/index.js"
+compatibility_date = "2024-12-10"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Base URL used when constructing public asset links (override per env)
+PUBLIC_BASE_URL = "http://localhost:8787"
+CV_PUBLIC_PREFIX = "/public"
+ADMIN_TOKEN = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "portfolio"
+database_id = "000000"
+migrations_dir = "db"
+
+[[r2_buckets]]
+binding = "CV_BUCKET"
+bucket_name = "portfolio"
+
+[env.dev]
+name = "portfolio-worker-dev"
+route = ""
+workers_dev = true
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "portfolio"
+database_id = "000000"
+migrations_dir = "db"
+
+[[env.dev.r2_buckets]]
+binding = "CV_BUCKET"
+bucket_name = "portfolio"
+
+[env.production]
+name = "portfolio-worker"
+route = "api.example.com/*"
+workers_dev = false
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "portfolio"
+database_id = "000000"
+migrations_dir = "db"
+
+[[env.production.r2_buckets]]
+binding = "CV_BUCKET"
+bucket_name = "portfolio"

@@ -43,12 +43,18 @@ yarn install
 Create a `.env.local` file in the frontend directory:
 
 ```bash
-# Strapi API URL
+# Strapi API URL (for traditional Strapi backend)
 NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 NEXT_PUBLIC_STRAPI_API_URL=http://localhost:1337/api
+
+# OR Cloudflare Worker API URL (for Worker-based backend)
+# NEXT_PUBLIC_STRAPI_URL=https://your-worker.workers.dev
+# NEXT_PUBLIC_STRAPI_API_URL=https://your-worker.workers.dev/api
 ```
 
-For production, update these URLs to your production Strapi instance.
+For production:
+- **Traditional Strapi**: Update URLs to your production Strapi instance
+- **Cloudflare Worker**: Update URLs to your deployed Worker URL (e.g., `https://your-worker.your-domain.com`)
 
 ## Development
 
@@ -117,13 +123,19 @@ frontend/
 
 ## API Integration
 
-The app fetches data from Strapi using the following endpoints:
+The app fetches data from the backend API using the following endpoints:
 
 - `GET /api/introduction` - Personal introduction data
 - `GET /api/work-experiences` - Work experience entries
 - `GET /api/blogs` - Blog post listings
 - `GET /api/blogs?filters[slug][$eq]=slug` - Individual blog post
-- `GET /cv.html` - Generated CV
+- `GET /cv.html` - Generated CV (Strapi) or `GET /api/generated-profile` (Worker)
+
+The frontend is compatible with both:
+- **Traditional Strapi backend** (Postgres-based)
+- **Cloudflare Worker backend** (D1-based, see `backend-worker/` directory)
+
+Both backends implement the same API contract, so the frontend code requires no changes when switching between them.
 
 ## Revalidation Strategy
 

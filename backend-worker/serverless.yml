@@ -1,0 +1,45 @@
+service: portfolio-worker
+frameworkVersion: "3"
+
+provider:
+  name: cloudflare
+  config:
+    accountId: ${env:CLOUDFLARE_ACCOUNT_ID}
+    apiToken: ${env:CLOUDFLARE_API_TOKEN}
+    workers:
+      portfolio-worker:
+        name: ${env:WORKER_NAME, 'portfolio-worker'}
+        script: dist/index.js
+        routes:
+          - pattern: ${env:CLOUDFLARE_ROUTE, 'api.example.com/*'}
+            zone: ${env:CLOUDFLARE_ZONE_ID, ''}
+        bindings:
+          - type: d1
+            name: DB
+            id: ${env:CLOUDFLARE_D1_ID, ''}
+          - type: r2
+            name: CV_BUCKET
+            bucket: ${env:CLOUDFLARE_R2_BUCKET, ''}
+
+plugins:
+  - serverless-cloudflare-workers
+
+package:
+  patterns:
+    - dist/**
+    - wrangler.toml
+    - src/**
+    - tsconfig.json
+    - package.json
+
+functions:
+  api:
+    name: ${env:WORKER_NAME, 'portfolio-worker'}
+    script: dist/index.js
+    routes:
+      - pattern: ${env:CLOUDFLARE_ROUTE, 'api.example.com/*'}
+        zone: ${env:CLOUDFLARE_ZONE_ID, ''}
+
+custom:
+  scripts:
+    build: npm --prefix backend-worker run build
