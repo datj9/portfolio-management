@@ -1,6 +1,15 @@
 # Portfolio Management System
 
-A complete portfolio management system with **Strapi CMS** backend and **Next.js** frontend. Manage your professional content and automatically generate a beautiful portfolio website and CV.
+A complete portfolio management system with **Strapi CMS** or **Cloudflare Worker** backend and **Next.js** frontend. Manage your professional content and automatically generate a beautiful portfolio website and CV.
+
+## 🆕 Cloudflare Worker Support
+
+This project now supports **two backend options**:
+
+1. **Traditional Strapi (Postgres)** - Full-featured CMS with admin UI
+2. **Cloudflare Worker (D1 + R2)** - Serverless, edge-deployed API
+
+See **[CLOUDFLARE_WORKER_SUMMARY.md](./CLOUDFLARE_WORKER_SUMMARY.md)** for complete Worker migration details.
 
 ## 🚀 Features
 
@@ -103,7 +112,7 @@ yarn dev
 
 ```
 portfolio-management/
-├── backend/                   # Strapi CMS (Backend)
+├── backend/                   # Strapi CMS (Backend Option 1)
 │   ├── config/               # Strapi configuration
 │   ├── src/                  # Strapi source
 │   │   ├── api/
@@ -116,13 +125,28 @@ portfolio-management/
 │   │   └── cv.html          # Auto-generated CV
 │   ├── database/             # SQLite database
 │   └── package.json
+├── backend-worker/            # Cloudflare Worker (Backend Option 2)
+│   ├── src/                  # Worker source code
+│   │   ├── index.ts          # Main API routes
+│   │   ├── repositories/     # Data access layer
+│   │   ├── services/         # Business logic (CV generation)
+│   │   └── utils/            # Helpers
+│   ├── db/                   # D1 database schema
+│   ├── wrangler.toml         # Cloudflare configuration
+│   ├── serverless.yml        # Serverless Framework config
+│   └── package.json
 ├── frontend/                  # Next.js Frontend
 │   ├── app/                  # Pages (App Router)
 │   ├── components/           # React components
 │   ├── lib/                  # API & utilities
 │   ├── types/                # TypeScript types
 │   └── package.json
+├── .github/workflows/
+│   └── worker.yml            # CI/CD for Worker deployment
 ├── package.json              # Root workspace config
+├── CLOUDFLARE_WORKER_SUMMARY.md  # Worker migration complete guide
+├── MIGRATION.md              # Postgres to D1 migration guide
+├── WORKER_FRONTEND_CONFIG.md # Frontend Worker configuration
 ├── GET_STARTED.md            # Quick start guide
 ├── PORTFOLIO_SETUP.md        # Detailed backend docs
 ├── FRONTEND_SETUP.md         # Detailed frontend docs
@@ -338,21 +362,35 @@ NEXT_PUBLIC_STRAPI_API_URL=https://your-strapi-domain.com/api
 
 ## 📚 Documentation
 
-Detailed documentation is available in:
-
+### Strapi Backend (Traditional)
 - **[QUICK_START.md](./QUICK_START.md)** - Get started in 5 minutes
 - **[PORTFOLIO_SETUP.md](./PORTFOLIO_SETUP.md)** - Complete Strapi backend guide
-- **[FRONTEND_SETUP.md](./FRONTEND_SETUP.md)** - Complete Next.js frontend guide
 - **[PM2_GUIDE.md](./PM2_GUIDE.md)** - PM2 process manager guide
+
+### Cloudflare Worker Backend (Serverless)
+- **[CLOUDFLARE_WORKER_SUMMARY.md](./CLOUDFLARE_WORKER_SUMMARY.md)** - Complete Worker migration guide
+- **[MIGRATION.md](./MIGRATION.md)** - Postgres to D1 data migration
+- **[WORKER_FRONTEND_CONFIG.md](./WORKER_FRONTEND_CONFIG.md)** - Frontend Worker configuration
+- **[backend-worker/README.md](./backend-worker/README.md)** - Worker development guide
+
+### Frontend
+- **[FRONTEND_SETUP.md](./FRONTEND_SETUP.md)** - Complete Next.js frontend guide
 - **[frontend/README.md](./frontend/README.md)** - Frontend technical details
 
 ## 🛠️ Tech Stack
 
-### Backend
+### Backend (Option 1: Strapi)
 - **Strapi 4.10.7** - Headless CMS
 - **PostgreSQL** - Database
 - **PM2** - Process manager (production)
 - **Node.js** - Runtime
+
+### Backend (Option 2: Cloudflare Worker)
+- **Cloudflare Workers** - Serverless edge runtime
+- **Hono** - Lightweight web framework
+- **D1** - Serverless SQLite database
+- **R2** - Object storage for CV files
+- **TypeScript** - Type safety
 
 ### Frontend
 - **Next.js 14** - React framework

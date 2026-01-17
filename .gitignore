@@ -124,3 +124,14 @@ frontend/.next
 frontend/out
 frontend/.vercel
 frontend/*.tsbuildinfo
+
+############################
+# Backend Worker (Cloudflare)
+############################
+
+backend-worker/node_modules
+backend-worker/dist
+backend-worker/.wrangler
+backend-worker/.env
+backend-worker/.env.*
+backend-worker/*.tsbuildinfo
