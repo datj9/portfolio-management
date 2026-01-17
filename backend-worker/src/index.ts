@@ -56,11 +56,10 @@ app.get('/api/work-experiences', async (context) => {
 app.get('/api/blogs', async (context) => {
   const repository = new PortfolioRepository(context.env.DB);
   const slugFilter = context.req.query('filters[slug][$eq]') ?? context.req.query('slug');
-  const page = parseInteger(context.req.query('pagination[page]') ?? context.req.query('page'), 1);
-  const pageSize = parseInteger(
-    context.req.query('pagination[pageSize]') ?? context.req.query('pageSize'),
-    10,
-  );
+  const paginationQuery = context.req.query('pagination[page]') || context.req.query('page') || null;
+  const pageSizeQuery = context.req.query('pagination[pageSize]') || context.req.query('pageSize') || null;
+  const page = parseInteger(paginationQuery ?? null, 1);
+  const pageSize = parseInteger(pageSizeQuery ?? null, 10);
 
   if (slugFilter) {
     const blog = await repository.fetchBlogBySlug(slugFilter);
