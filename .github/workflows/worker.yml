@@ -35,15 +35,9 @@ jobs:
         working-directory: backend-worker
         run: npm run build
 
-      - name: Deploy Worker (Serverless Framework)
+      - name: Deploy Worker
         working-directory: backend-worker
         env:
-          SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
-          CLOUDFLARE_D1_ID: ${{ secrets.CLOUDFLARE_D1_ID }}
-          CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
-          CLOUDFLARE_ROUTE: ${{ secrets.CLOUDFLARE_ROUTE }}
-          WORKER_NAME: ${{ secrets.WORKER_NAME }}
-        run: npm run deploy:serverless
+        run: npm run deploy

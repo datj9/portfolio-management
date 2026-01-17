@@ -8,7 +8,9 @@ export const metadata = {
   description: 'My professional work experience and career journey',
 };
 
-export const revalidate = IMMEDIATE_REVALIDATE_TIME;
+export const dynamic = 'force-dynamic';
+export const runtime = 'edge';
+export const revalidate = 1800;;
 
 export default async function ExperiencePage() {
   try {
