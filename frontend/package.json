@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "build:worker": "next build && ln -sf ../../../node_modules .next/standalone/node_modules && cp -R .next/standalone/frontend/ .next/standalone/ && rm -rf .next/standalone/frontend && opennextjs-cloudflare build --skipNextBuild",
+    "build:worker": "next build && rsync -a .next/standalone/frontend/ .next/standalone/ && rm -rf .next/standalone/frontend && opennextjs-cloudflare build --skipNextBuild",
     "start": "next start -p 3000",
     "lint": "next lint",
     "type-check": "tsc --noEmit"
