@@ -1,12 +1,13 @@
 service: portfolio-worker
 frameworkVersion: '3'
-licenseKey: ${env:SERVERLESS_LICENSE_KEY}
 
 provider:
   name: cloudflare
   config:
     accountId: ${env:CLOUDFLARE_ACCOUNT_ID}
     apiToken: ${env:CLOUDFLARE_API_TOKEN}
+    authEmail: ${env:CLOUDFLARE_AUTH_EMAIL}
+    authKey: ${env:CLOUDFLARE_AUTH_KEY}
     workers:
       portfolio-worker:
         name: ${env:WORKER_NAME, 'portfolio-worker'}
