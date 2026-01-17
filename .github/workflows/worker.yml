@@ -46,4 +46,6 @@ jobs:
           CLOUDFLARE_R2_BUCKET: ${{ secrets.CLOUDFLARE_R2_BUCKET }}
           CLOUDFLARE_ROUTE: ${{ secrets.CLOUDFLARE_ROUTE }}
           WORKER_NAME: ${{ secrets.WORKER_NAME }}
+          CLOUDFLARE_AUTH_EMAIL: ${{ secrets.CLOUDFLARE_AUTH_EMAIL }}
+          CLOUDFLARE_AUTH_KEY: ${{ secrets.CLOUDFLARE_AUTH_KEY }}
         run: npm run deploy:serverless
