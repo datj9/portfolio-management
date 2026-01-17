@@ -8,7 +8,7 @@ import CVContent from "@/components/CVContent"
 import { IMMEDIATE_REVALIDATE_TIME } from "@/common/constants"
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+
 export const revalidate = 1800;
 
 export default async function CVPage() {
