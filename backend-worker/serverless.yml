@@ -1,5 +1,6 @@
 service: portfolio-worker
 frameworkVersion: '4'
+licenseKey: ${env:SERVERLESS_LICENSE_KEY}
 
 provider:
   name: cloudflare
