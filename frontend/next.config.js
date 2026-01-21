@@ -5,6 +5,7 @@ const nextConfig = {
   output: 'standalone',
   outputFileTracingRoot: path.join(__dirname, '../'),
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'http',
@@ -14,6 +15,12 @@ const nextConfig = {
       },
     ],
   },
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/sharp/**/*',
+        '**/sharp/**/*',
+      ],
+    },
 }
 
 module.exports = nextConfig

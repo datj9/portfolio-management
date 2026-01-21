@@ -1,5 +1,15 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
+console.log("Loading OpenNext Config...");
+
 export default defineCloudflareConfig({
-  // Add R2 or KV configuration here if needed for ISR
+  // @ts-ignore
+  build: {
+    external: ["sharp"],
+    esbuild: {
+      loader: {
+        ".node": "empty",
+      },
+    },
+  },
 });
